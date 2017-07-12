@@ -34,13 +34,16 @@ public class FormServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        String[] classes = null;
+        String[] hobbies = null;
+        
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String ageString = request.getParameter("age");
         int age = Integer.parseInt(ageString);
-        String[] classes = request.getParameterValues("classes");
+        classes = request.getParameterValues("classes");
         String color = request.getParameter("color");
-        String[] hobbies = request.getParameterValues("hobbies");
+        hobbies = request.getParameterValues("hobbies");
         
         Student student = new Student(firstName, lastName, age, classes, color, hobbies);
             
@@ -52,7 +55,7 @@ public class FormServlet extends HttpServlet {
             out.println("<title>Servlet formServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet formServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1 style=\"background-color=" + color + ";\">Servlet formServlet at " + request.getContextPath() + "</h1>");
             
             out.println("<h3>First name: " + student.getFirstName() + "</h3>");
             out.println("<h3>Last name: " + student.getLastName() + "</h3>");
@@ -67,6 +70,7 @@ public class FormServlet extends HttpServlet {
             
             out.println("<p>Color chosen: " + student.getColor() + "</p>");
             
+            out.println("<p>Hobbies:</p>");
             out.println("<ul>");
                 for (String hobby : student.getHobbies()) {
                     out.println("<li>" + hobby + "</li>");
