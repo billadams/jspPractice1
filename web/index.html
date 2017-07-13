@@ -11,6 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <h1>Please enter the requested information:</h1>
         <form action="formServlet" method="get">
             <label>First Name:</label>
             <input type="text" name="firstName" value="Bill" required autofocus><br>
@@ -27,9 +28,9 @@ and open the template in the editor.
             <label>Select a color:</label><br>
             <input type="color" name="color"><br><br>
             
-            <label>Hobbies (select all that apply):</label><br>
+            <label>Hobbies (hold ctrl to select multiple):</label><br>
             <select name="hobbies" size="3" multiple>
-                <option value="run" selected>Running</option>
+                <option value="run">Running</option>
                 <option value="hike">Hiking</option>
                 <option value="swim">Swimming</option>
                 <option value="bike">Biking</option>
@@ -39,7 +40,8 @@ and open the template in the editor.
                 <option value="skateboard">Skate Boarding</option>
             </select><br><br>
             
-            
+            <label>What is your expected graduation date?</label><br>
+            <input type="date" name="date"><br><br>
             
             <input type="submit" value="Send It">
         </form>

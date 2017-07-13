@@ -8,6 +8,7 @@ package servlets;
 import business.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +45,10 @@ public class FormServlet extends HttpServlet {
         classes = request.getParameterValues("classes");
         String color = request.getParameter("color");
         hobbies = request.getParameterValues("hobbies");
+        String gradDateString = request.getParameter("date");
+        LocalDate gradDate = (gradDateString);
         
-        Student student = new Student(firstName, lastName, age, classes, color, hobbies);
+        Student student = new Student(firstName, lastName, age, classes, color, hobbies, gradDate);
             
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -55,27 +58,36 @@ public class FormServlet extends HttpServlet {
             out.println("<title>Servlet formServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1 style=\"background-color=" + color + ";\">Servlet formServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1 style=\"background-color:" + color + ";\">Servlet formServlet at " + request.getContextPath() + "</h1>");
             
             out.println("<h3>First name: " + student.getFirstName() + "</h3>");
             out.println("<h3>Last name: " + student.getLastName() + "</h3>");
             out.println("<h3>Age: " + student.getAge() + "</h3>");
             
-            out.println("<p>Classes taken:</p>");
-            out.println("<ul>");
+            if (student.getClasses() != null) {
+                out.println("<p>Classes taken:</p>");
+                out.println("<ul>");
                 for (String theClass : student.getClasses()) {
                     out.println("<li>" + theClass + "</li>");
                 }            
-            out.println("</ul>");
+                out.println("</ul>");   
+            } else {
+                out.println("<p>No classes taken</p>");
+            }
             
             out.println("<p>Color chosen: " + student.getColor() + "</p>");
             
+            if (student.getHobbies() != null) {
             out.println("<p>Hobbies:</p>");
             out.println("<ul>");
                 for (String hobby : student.getHobbies()) {
                     out.println("<li>" + hobby + "</li>");
                 }
-            out.println("</ul>");
+            out.println("</ul>");               
+            } else {
+                out.println("<p>Student doesn't have any hobbies</p>");
+            }
+ 
                   
             out.println("</body>");
             out.println("</html>");

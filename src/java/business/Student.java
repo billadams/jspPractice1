@@ -5,6 +5,8 @@
  */
 package business;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author da202057
@@ -14,9 +16,10 @@ public class Student {
     private String firstName;
     private String lastName;
     private int age;
-    private String[] classes;
+    private String[] classes = null;
     private String color;
-    private String[] hobbies;
+    private String[] hobbies = null;
+    private LocalDate gradDate;
     
     public Student() {
         this.firstName = "";
@@ -25,15 +28,17 @@ public class Student {
         this.classes = null;
         this.color = "";
         this.hobbies = null;
+        this.gradDate = null;
     }
     
-    public Student(String firstName, String lastName, int age, String[] classes, String color, String[] hobbies) {
+    public Student(String firstName, String lastName, int age, String[] classes, String color, String[] hobbies, LocalDate gradDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.classes = classes;
         this.color = color;
         this.hobbies = hobbies;
+        this.gradDate = gradDate;
     }
 
     /**
@@ -118,5 +123,19 @@ public class Student {
      */
     public void setHobbies(String[] hobbies) {
         this.hobbies = hobbies;
+    }
+
+    /**
+     * @return the gradDate
+     */
+    public LocalDate getGradDate() {
+        return gradDate;
+    }
+
+    /**
+     * @param gradDate the gradDate to set
+     */
+    public void setGradDate(LocalDate gradDate) {
+        this.gradDate = gradDate;
     }
 }
