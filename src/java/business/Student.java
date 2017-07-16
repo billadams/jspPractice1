@@ -6,6 +6,7 @@
 package business;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
@@ -137,5 +138,12 @@ public class Student {
      */
     public void setGradDate(LocalDate gradDate) {
         this.gradDate = gradDate;
+    }
+    
+    public int daysUntilGraduation() {
+        LocalDate today = LocalDate.now();
+        Period daysUntilGraduation = Period.between(today, this.getGradDate());
+      
+        return daysUntilGraduation.getDays();
     }
 }

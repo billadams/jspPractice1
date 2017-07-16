@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Form To Servlet</title>
@@ -13,23 +8,32 @@ and open the template in the editor.
     <body>
         <h1>Please enter the requested information:</h1>
         <form action="formServlet" method="get">
-            <label>First Name:</label>
-            <input type="text" name="firstName" value="Bill" required autofocus><br>
-            <label>Last Name:</label>
-            <input type="text" name="lastName" value="Adams" required><br>          
-            <label>Age:</label>
-            <input type="number" name="age" value="40" required><br><br>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="firstName" value="Bill" required autofocus><br>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="lastName" value="Adams" required><br>          
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" value="40" required><br><br>
             
-            <label>Classes Taken:</label><br>
-            <input type="checkbox" name="classes" value="1520">1520<br>
-            <input type="checkbox" name="classes" value="1425">1425<br>
-            <input type="checkbox" name="classes" value="1550">1550<br><br>
+            <fieldset>
+                <legend>Classes taken:</legend>
+                
+                <input type="checkbox" id="class_1520" name="classes" value="1520">
+                <label for="class_1520">Computer Programming</label><br>
+                
+                <input type="checkbox" id="class_1425" name="classes" value="1425">
+                <label for="class_1425">Home Economics</label><br>
+                
+                <input type="checkbox" id="class_1550" name="classes" value="1550">
+                <label for="class_1550">Good Housekeeping Skills</label>
+            </fieldset><br><br>
+
             
-            <label>Select a color:</label><br>
-            <input type="color" name="color"><br><br>
+            <label for="color">Select a color:</label><br>
+            <input type="color" id="color" name="color"><br><br>
             
-            <label>Hobbies (hold ctrl to select multiple):</label><br>
-            <select name="hobbies" size="3" multiple>
+            <label for="hobbies">Hobbies (hold ctrl or cmd to select multiple):</label><br>
+            <select name="hobbies" id="hobbies" size="3" multiple>
                 <option value="run">Running</option>
                 <option value="hike">Hiking</option>
                 <option value="swim">Swimming</option>
@@ -40,10 +44,10 @@ and open the template in the editor.
                 <option value="skateboard">Skate Boarding</option>
             </select><br><br>
             
-            <label>What is your expected graduation date?</label><br>
-            <input type="date" name="date"><br><br>
+            <label for="grad_date">What is your expected graduation date?</label><br>
+            <input type="date" id="grad_date" name="gradDate" required><br><br>
             
-            <input type="submit" value="Send It">
+            <input type="submit" id="submit" value="Send It">
         </form>
     </body>
 </html>

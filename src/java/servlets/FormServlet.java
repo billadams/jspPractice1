@@ -9,6 +9,9 @@ import business.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,60 +38,67 @@ public class FormServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String[] classes = null;
-        String[] hobbies = null;
-        
+        // Get the values of the submitted form.
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String ageString = request.getParameter("age");
         int age = Integer.parseInt(ageString);
-        classes = request.getParameterValues("classes");
+        String[] classes = request.getParameterValues("classes");
         String color = request.getParameter("color");
-        hobbies = request.getParameterValues("hobbies");
-        String gradDateString = request.getParameter("date");
-        LocalDate gradDate = (gradDateString);
+        String[] hobbies = request.getParameterValues("hobbies");
+        String gradDateString = request.getParameter("gradDate");
+        LocalDate gradDate = LocalDate.parse(gradDateString);
         
+        // Create a student object.
         Student student = new Student(firstName, lastName, age, classes, color, hobbies, gradDate);
             
+        // Create the output from the responses the user entered and display them.
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet formServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1 style=\"background-color:" + color + ";\">Servlet formServlet at " + request.getContextPath() + "</h1>");
-            
-            out.println("<h3>First name: " + student.getFirstName() + "</h3>");
-            out.println("<h3>Last name: " + student.getLastName() + "</h3>");
-            out.println("<h3>Age: " + student.getAge() + "</h3>");
-            
-            if (student.getClasses() != null) {
-                out.println("<p>Classes taken:</p>");
-                out.println("<ul>");
-                for (String theClass : student.getClasses()) {
-                    out.println("<li>" + theClass + "</li>");
-                }            
-                out.println("</ul>");   
-            } else {
-                out.println("<p>No classes taken</p>");
-            }
-            
-            out.println("<p>Color chosen: " + student.getColor() + "</p>");
-            
-            if (student.getHobbies() != null) {
-            out.println("<p>Hobbies:</p>");
-            out.println("<ul>");
-                for (String hobby : student.getHobbies()) {
-                    out.println("<li>" + hobby + "</li>");
+                out.println("<h1 style=\"background-color:" + color + ";\">Servlet formServlet at " + request.getContextPath() + "</h1>");
+
+                out.println("<h3>First name: " + student.getFirstName() + "</h3>");
+                out.println("<h3>Last name: " + student.getLastName() + "</h3>");
+                out.println("<h3>Age: " + student.getAge() + "</h3>");
+
+                // Logic for the checkboxes that were submitted.
+                if (student.getClasses() != null) {
+                    out.println("<p>Classes taken:</p>");
+                    out.println("<ul>");
+                    for (String theClass : student.getClasses()) {
+                        out.println("<li>" + theClass + "</li>");
+                    }            
+                    out.println("</ul>");   
+                } else {
+                    out.println("<p>No classes taken</p>");
                 }
-            out.println("</ul>");               
-            } else {
-                out.println("<p>Student doesn't have any hobbies</p>");
-            }
- 
-                  
+
+                out.println("<p>Color chosen: " + student.getColor() + "</p>");
+
+                // Logic for the options of the select that were submitted.
+                if (student.getHobbies() != null) {
+                out.println("<p>Hobbies:</p>");
+                out.println("<ul>");
+                    for (String hobby : student.getHobbies()) {
+                        out.println("<li>" + hobby + "</li>");
+                    }
+                out.println("</ul>");               
+                } else {
+                    out.println("<p>Student doesn't have any hobbies</p>");
+                }
+
+                DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+                String gradDateFormatted = dtf.format(student.getGradDate());
+//                out.println("<p>" + student.getGradDate().toString() + "</p>");
+                out.println("<p>Expected graduation date: " + gradDateFormatted + "</p>");
+                
+                out.println("<p>Days until graduation date: " + student.daysUntilGraduation() + "</p>");
+  
             out.println("</body>");
             out.println("</html>");
         }
