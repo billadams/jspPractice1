@@ -57,14 +57,15 @@ public class FormServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet formServlet</title>");            
+            out.println("<title>Servlet formServlet</title>"); 
+            out.println("<link rel=\"stylesheet\" href=\"styles/main.css\" type=\"text/css\"/>");
             out.println("</head>");
             out.println("<body>");
-                out.println("<h1 style=\"background-color:" + color + ";\">Servlet formServlet at " + request.getContextPath() + "</h1>");
+                out.println("<h1 style=\"background-color:" + color + ";\">Thank you for sharing your information with us</h1>");
 
-                out.println("<h3>First name: " + student.getFirstName() + "</h3>");
-                out.println("<h3>Last name: " + student.getLastName() + "</h3>");
-                out.println("<h3>Age: " + student.getAge() + "</h3>");
+                out.println("<p>First name: " + student.getFirstName() + "</p>");
+                out.println("<p>Last name: " + student.getLastName() + "</p>");
+                out.println("<p>Age: " + student.getAge() + "</p>");
 
                 // Logic for the checkboxes that were submitted.
                 if (student.getClasses() != null) {
@@ -92,11 +93,10 @@ public class FormServlet extends HttpServlet {
                     out.println("<p>Student doesn't have any hobbies</p>");
                 }
 
-                DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
-                String gradDateFormatted = dtf.format(student.getGradDate());
-//                out.println("<p>" + student.getGradDate().toString() + "</p>");
-                out.println("<p>Expected graduation date: " + gradDateFormatted + "</p>");
+                // Format the date the user selected and output it.
+                out.println("<p>Expected graduation date: " + student.formatGraduationDate() + "</p>");
                 
+                // Get and output the days until graduation.
                 out.println("<p>Days until graduation date: " + student.daysUntilGraduation() + "</p>");
   
             out.println("</body>");

@@ -6,7 +6,9 @@
 package business;
 
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
 
 /**
  *
@@ -140,10 +142,17 @@ public class Student {
         this.gradDate = gradDate;
     }
     
+    public String formatGraduationDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+        String gradDateFormatted = dtf.format(this.getGradDate());
+        
+        return gradDateFormatted;
+    }
+    
     public int daysUntilGraduation() {
         LocalDate today = LocalDate.now();
-        Period daysUntilGraduation = Period.between(today, this.getGradDate());
+        int daysUntilGraduation = (int) ChronoUnit.DAYS.between(today, this.getGradDate());
       
-        return daysUntilGraduation.getDays();
+        return daysUntilGraduation;
     }
 }
