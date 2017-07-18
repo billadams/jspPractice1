@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import business.Student;
@@ -20,9 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author da202057
+ * @author Bill Adams
  */
-@WebServlet(name = "formServlet", urlPatterns = {"/formServlet"})
 public class FormServlet extends HttpServlet {
 
     /**
@@ -36,72 +30,45 @@ public class FormServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+
+        // Set the default url
+        String url = "/index.html";
         
-        // Get the values of the submitted form.
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String ageString = request.getParameter("age");
-        int age = Integer.parseInt(ageString);
-        String[] classes = request.getParameterValues("classes");
-        String color = request.getParameter("color");
-        String[] hobbies = request.getParameterValues("hobbies");
-        String gradDateString = request.getParameter("gradDate");
-        LocalDate gradDate = LocalDate.parse(gradDateString);
-        
-        // Create a student object.
-        Student student = new Student(firstName, lastName, age, classes, color, hobbies, gradDate);
-            
-        // Create the output from the responses the user entered and display them.
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet formServlet</title>"); 
-            out.println("<link rel=\"stylesheet\" href=\"styles/main.css\" type=\"text/css\"/>");
-            out.println("</head>");
-            out.println("<body>");
-                out.println("<h1 style=\"background-color:" + color + ";\">Thank you for sharing your information with us</h1>");
-
-                out.println("<p>First name: " + student.getFirstName() + "</p>");
-                out.println("<p>Last name: " + student.getLastName() + "</p>");
-                out.println("<p>Age: " + student.getAge() + "</p>");
-
-                // Logic for the checkboxes that were submitted.
-                if (student.getClasses() != null) {
-                    out.println("<p>Classes taken:</p>");
-                    out.println("<ul>");
-                    for (String theClass : student.getClasses()) {
-                        out.println("<li>" + theClass + "</li>");
-                    }            
-                    out.println("</ul>");   
-                } else {
-                    out.println("<p>No classes taken</p>");
-                }
-
-                out.println("<p>Color chosen: " + student.getColor() + "</p>");
-
-                // Logic for the options of the select that were submitted.
-                if (student.getHobbies() != null) {
-                out.println("<p>Hobbies:</p>");
-                out.println("<ul>");
-                    for (String hobby : student.getHobbies()) {
-                        out.println("<li>" + hobby + "</li>");
-                    }
-                out.println("</ul>");               
-                } else {
-                    out.println("<p>Student doesn't have any hobbies</p>");
-                }
-
-                // Format the date the user selected and output it.
-                out.println("<p>Expected graduation date: " + student.formatGraduationDate() + "</p>");
-                
-                // Get and output the days until graduation.
-                out.println("<p>Days until graduation date: " + student.daysUntilGraduation() + "</p>");
-  
-            out.println("</body>");
-            out.println("</html>");
+        // Get the current action
+        String action = request.getParameter("action");
+        if (action == null) {
+            // The default action
+            action = "gatherUserInfo";
         }
+        
+        // Set the url to the correct page
+        if (action.equals("gatherUserInfo")) {
+            url = "/index.html";
+        }
+        else if (action.equals("submit")) {
+            // Get the values of the submitted form.
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String ageString = request.getParameter("age");
+            int age = Integer.parseInt(ageString);
+            String[] classes = request.getParameterValues("classes");
+            String color = request.getParameter("color");
+            String[] hobbies = request.getParameterValues("hobbies");
+            String gradDateString = request.getParameter("gradDate");
+            LocalDate gradDate = LocalDate.parse(gradDateString);
+
+            // Create a student object.
+            Student student = new Student(firstName, lastName, age, classes, color, hobbies, gradDate);
+            
+            // Set the User object in the request object and set the URL
+            request.setAttribute("student", student);
+            url = "/thanks.jsp";
+        }
+        
+        // Forward request and response objects to the specified URL
+        getServletContext()
+                .getRequestDispatcher(url)
+                .forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

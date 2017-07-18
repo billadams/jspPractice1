@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package business;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -12,9 +8,9 @@ import java.time.temporal.ChronoUnit;
 
 /**
  *
- * @author da202057
+ * @author Bill Adams
  */
-public class Student {
+public class Student implements Serializable {
     
     private String firstName;
     private String lastName;
