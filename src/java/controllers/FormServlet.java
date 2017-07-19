@@ -98,7 +98,7 @@ public class FormServlet extends HttpServlet {
             // Set the User object in the request object and set the URL
             request.setAttribute("student", student);
             request.setAttribute("messages", messages);
-            if (messages.size() != 0) {
+            if (!messages.isEmpty()) {
                 url = "/index.jsp";
             }
             else {
