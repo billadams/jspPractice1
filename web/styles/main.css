@@ -45,3 +45,6 @@ br {
 .margin_left {
     margin-left: 0.5em;
 }
+.error {
+    color: red;
+}

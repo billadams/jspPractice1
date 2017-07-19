@@ -1,14 +1,10 @@
-package servlets;
+package controllers;
 
 import business.Student;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +29,7 @@ public class FormServlet extends HttpServlet {
 
         // Set the default url and message
         String url = "/index.html";
-        String message = "";
+        ArrayList<String> messages = new ArrayList<>();
         
         // Get the current action
         String action = request.getParameter("action");
@@ -55,18 +51,32 @@ public class FormServlet extends HttpServlet {
             String color = request.getParameter("color");
             String[] hobbies = request.getParameterValues("hobbies");
             String gradDateString = request.getParameter("gradDate");
-//            LocalDate gradDate = LocalDate.parse(gradDateString);
 
             // Create a student object.
 //            Student student = new Student(firstName, lastName, ageString, classes, color, hobbies, gradDate);
                 Student student = new Student();
 
+            if (firstName.equals("")){
+                messages.add("Please enter your first name");
+            }
+            else {
+                student.setFirstName(firstName);
+            }
+            
+            if (lastName.equals("")) {
+               messages.add("Please enter your last name"); 
+            }
+            else {
+                student.setLastName(lastName);
+            }
+            
             try {
                 int age = Integer.parseInt(ageString);
                 student.setAge(age);
             }
             catch (Exception e) {
-                message += "Please enter an age using integers\n";
+                student.setAge(null);
+                messages.add("Please enter an age using integers");
             }
             
             try {
@@ -74,12 +84,21 @@ public class FormServlet extends HttpServlet {
                 student.setGradDate(gradDate);
             }
             catch (Exception e) {
-                message += "Please enter a valid date";
+                messages.add("Please enter a valid date");
             }
+            
+            // Set the color to the color the user selected.
+            student.setColor(color);
+            
+            // Attempt to set the classes and hobbies. If they weren't submitted,
+            // the view will output that they weren't selected.
+            student.setClasses(classes);
+            student.setHobbies(hobbies);
             
             // Set the User object in the request object and set the URL
             request.setAttribute("student", student);
-            if (!message.equals("")) {
+            request.setAttribute("messages", messages);
+            if (messages.size() != 0) {
                 url = "/index.jsp";
             }
             else {

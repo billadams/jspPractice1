@@ -14,7 +14,7 @@ public class Student implements Serializable {
     
     private String firstName;
     private String lastName;
-    private int age;
+    private Integer age = null;
     private String[] classes = null;
     private String color;
     private String[] hobbies = null;
@@ -71,14 +71,14 @@ public class Student implements Serializable {
     /**
      * @return the age
      */
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
     /**
      * @param age the age to set
      */
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

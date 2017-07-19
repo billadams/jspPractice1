@@ -10,8 +10,12 @@
     </head>
     <body>
         <h1>Please enter the requested information:</h1>
-        <c:if test="${message != null}">
-            <p>${message}</p>
+        <c:if test="${messages != null}">
+            <ul class="error">
+                <c:forEach var="theMessage" items="${messages}">
+                    <li>${theMessage}</li>
+                </c:forEach>
+            </ul>
         </c:if>
             
         <form action="formServlet" method="post">
@@ -21,7 +25,7 @@
             <label for="last_name" class="input_text_label">Last Name:</label>
             <input type="text" id="last_name" name="lastName" value="${student.lastName}"><br>          
             <label for="age"class="input_text_label">Age:</label>
-            <input type="number" id="age" name="age" value="${student.age}"><br><br>
+            <input type="text" id="age" name="age" value="${student.age}"><br><br>
             
             <fieldset>
                 <legend>Classes taken:</legend>
@@ -53,7 +57,7 @@
             </select><br><br>
             
             <label for="grad_date">What is your expected graduation date?</label><br>
-            <input type="date" id="grad_date" name="gradDate" required><br><br>
+            <input type="date" id="grad_date" name="gradDate"><br><br>
             
             <input type="submit" id="submit" value="Send It">
         </form>
