@@ -31,8 +31,9 @@ public class FormServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Set the default url
+        // Set the default url and message
         String url = "/index.html";
+        String message = "";
         
         // Get the current action
         String action = request.getParameter("action");
@@ -50,19 +51,40 @@ public class FormServlet extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String ageString = request.getParameter("age");
-            int age = Integer.parseInt(ageString);
             String[] classes = request.getParameterValues("classes");
             String color = request.getParameter("color");
             String[] hobbies = request.getParameterValues("hobbies");
             String gradDateString = request.getParameter("gradDate");
-            LocalDate gradDate = LocalDate.parse(gradDateString);
+//            LocalDate gradDate = LocalDate.parse(gradDateString);
 
             // Create a student object.
-            Student student = new Student(firstName, lastName, age, classes, color, hobbies, gradDate);
+//            Student student = new Student(firstName, lastName, ageString, classes, color, hobbies, gradDate);
+                Student student = new Student();
+
+            try {
+                int age = Integer.parseInt(ageString);
+                student.setAge(age);
+            }
+            catch (Exception e) {
+                message += "Please enter an age using integers\n";
+            }
+            
+            try {
+                LocalDate gradDate = LocalDate.parse(gradDateString);
+                student.setGradDate(gradDate);
+            }
+            catch (Exception e) {
+                message += "Please enter a valid date";
+            }
             
             // Set the User object in the request object and set the URL
             request.setAttribute("student", student);
-            url = "/thanks.jsp";
+            if (!message.equals("")) {
+                url = "/index.jsp";
+            }
+            else {
+                url = "/thanks.jsp";
+            }
         }
         
         // Forward request and response objects to the specified URL

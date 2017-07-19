@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -8,14 +10,18 @@
     </head>
     <body>
         <h1>Please enter the requested information:</h1>
+        <c:if test="${message != null}">
+            <p>${message}</p>
+        </c:if>
+            
         <form action="formServlet" method="post">
             <input type="hidden" name="action" value="submit">
             <label for="first_name" class="input_text_label">First Name:</label>
-            <input type="text" id="first_name" name="firstName" value="Bill" required autofocus><br>
+            <input type="text" id="first_name" name="firstName" value="${student.firstName}" autofocus><br>
             <label for="last_name" class="input_text_label">Last Name:</label>
-            <input type="text" id="last_name" name="lastName" value="Adams" required><br>          
+            <input type="text" id="last_name" name="lastName" value="${student.lastName}"><br>          
             <label for="age"class="input_text_label">Age:</label>
-            <input type="number" id="age" name="age" value="40" required><br><br>
+            <input type="number" id="age" name="age" value="${student.age}"><br><br>
             
             <fieldset>
                 <legend>Classes taken:</legend>
@@ -53,3 +59,4 @@
         </form>
     </body>
 </html>
+

@@ -23,41 +23,43 @@
         <span>${student.age}</span><br>
         
         <label>Classes taken:</label>
+        <c:choose>
+            <c:when test="${student.classes != null}">
+                <ul>
+                    <c:forEach var="theClass" items="${student.classes}">
+                        <li>${theClass}</li>
+                    </c:forEach>
+                </ul>
+            </c:when> 
+            <c:otherwise>
+                <p>No classes taken</p>
+            </c:otherwise>
+        </c:choose>
         
+        <c:if test="${student.classes != null}">
+
+        </c:if>  
+        
+        <label>Color chosen</label>
+        <span>${student.color}</span><br>
+        
+        <label>Hobbies:</label>
+        <c:choose>
+            <c:when test="${student.hobbies != null}">
+                <ul>
+                    <c:forEach var="theHobby" items="${student.hobbies}">
+                        <li>${theHobby}</li>
+                    </c:forEach>
+                </ul>                
+            </c:when>
+            <c:otherwise>
+                <p>Student does not have any hobbies</p>
+            </c:otherwise>
+        </c:choose>
+                
+        <label>Expected graduation date:</label>
+        <span>${student.formatGraduationDate()}</span><br>
+        <label>Days until graduation date:</label>
+        <span>${student.daysUntilGraduation()}</span>
     </body>
 </html>
-
-
-
-<!--                // Logic for the checkboxes that were submitted.
-                if (student.getClasses() != null) {
-                    out.println("<p>Classes taken:</p>");
-                    out.println("<ul>");
-                    for (String theClass : student.getClasses()) {
-                        out.println("<li>" + theClass + "</li>");
-                    }            
-                    out.println("</ul>");   
-                } else {
-                    out.println("<p>No classes taken</p>");
-                }
-
-                out.println("<p>Color chosen: " + student.getColor() + "</p>");
-
-                // Logic for the options of the select that were submitted.
-                if (student.getHobbies() != null) {
-                out.println("<p>Hobbies:</p>");
-                out.println("<ul>");
-                    for (String hobby : student.getHobbies()) {
-                        out.println("<li>" + hobby + "</li>");
-                    }
-                out.println("</ul>");               
-                } else {
-                    out.println("<p>Student doesn't have any hobbies</p>");
-                }
-
-                // Format the date the user selected and output it.
-                out.println("<p>Expected graduation date: " + student.formatGraduationDate() + "</p>");
-                
-                // Get and output the days until graduation.
-                out.println("<p>Days until graduation date: " + student.daysUntilGraduation() + "</p>");
-  -->
