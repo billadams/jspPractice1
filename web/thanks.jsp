@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,11 +16,11 @@
     <body>
         <h1>Thank you for sharing your information with us!</h1>
         <label>First name:</label>
-        <span>${student.firstName}</span>
+        <span>${student.firstName}</span><br>
         <label>Last name:</label>
-        <span>${student.lastName}</span>
+        <span>${student.lastName}</span><br>
         <label>Age:</label>
-        <span>${student.age}</span>
+        <span>${student.age}</span><br>
         
         <label>Classes taken:</label>
         
